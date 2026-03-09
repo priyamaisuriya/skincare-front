@@ -2,13 +2,13 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "5c4d3cd3-7758-4d66-a08f-5a6f88541fc4"
   },
   "newProjectRoot": "projects",
   "projects": {
     "skincare-front": {
       "projectType": "application",
-      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -18,24 +18,31 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+
+   "styles": [
+  
+],
+"scripts": [
+ "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+],
+
             "server": "src/main.server.ts",
             "outputMode": "server",
+
             "security": {
               "allowedHosts": []
             },
+
             "ssr": {
               "entry": "src/server.ts"
             }
           },
+
           "configurations": {
             "production": {
               "budgets": [
@@ -52,14 +59,17 @@
               ],
               "outputHashing": "all"
             },
+
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+
+          "defaultConfiguration": "development"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
@@ -72,6 +82,7 @@
           },
           "defaultConfiguration": "development"
         },
+
         "test": {
           "builder": "@angular/build:unit-test"
         }
