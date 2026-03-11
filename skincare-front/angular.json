@@ -24,13 +24,6 @@
               "src/assets"
             ],
 
-   "styles": [
-  
-],
-"scripts": [
- "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-],
-
             "server": "src/main.server.ts",
             "outputMode": "server",
 

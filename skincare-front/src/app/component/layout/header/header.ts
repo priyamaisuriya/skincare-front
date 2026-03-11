@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../../service/category';
@@ -9,13 +9,14 @@ import { CategoryService } from '../../../service/category';
   imports: [CommonModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],   
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrl: './header.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Header implements OnInit {
 
   categories:any[]=[];
 
-  constructor(private category:CategoryService){}
+  constructor(private category:CategoryService, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -25,6 +26,7 @@ export class Header implements OnInit {
     this.category.getCategories().subscribe({
       next: (res: any) => {
         this.categories = res.data;
+        this.cdr.markForCheck();
       },
       error: (err: any) => console.error(err)
     });

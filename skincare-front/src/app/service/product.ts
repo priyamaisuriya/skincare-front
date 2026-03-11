@@ -21,8 +21,10 @@ export class ProductService {
   }
 
   // Single Product by ID
-  getSingleProduct(id:any){
-    return this.http.get('http://127.0.0.1:8000/api/products/' + id);
-  }
+  getSingleProduct(slug:any){
+  return this.http.get(
+    'http://127.0.0.1:8000/api/front/products/' + slug
+  );
+}
 
 }

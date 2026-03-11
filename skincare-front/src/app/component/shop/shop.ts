@@ -3,13 +3,14 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CategoryService } from '../../service/category';
 import { Shop } from '../../service/shop';
 import { ProductService } from '../../service/product';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
   standalone: true,   
-  imports: [CommonModule],   
+  imports: [CommonModule, RouterModule],   
   templateUrl: './shop.html',
-  styleUrls: ['./shop.css']
+  styleUrls: ['./shop.css'] 
 })
 export class ShopComponent implements OnInit {
 

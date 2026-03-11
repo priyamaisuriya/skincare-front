@@ -45,52 +45,33 @@
           
           <div *ngIf="products.length == 0" class="col-12 text-center no-product">
             <br><br><br><br><br><br>
-            <h4>No Products Found</h4>
-          </div>
+          <h4>No Products Found</h4>
+        </div>
+            <div class="col-md-6 col-lg-4 my-4" *ngFor="let item of products">
+              <div class="product-item">
+                <div class="image-holder">
+                  <img 
+                    [src]="item.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + item.product_images[0].image_url : 'assets/images/no-image.png'" 
+                    [alt]="item.name" 
+                    class="product-image img-fluid"
+                  >
+                </div>
 
-          <div class="col-md-6 col-lg-4 my-4" *ngFor="let item of products">
+                <div class="cart-concern">
+                     <!-- <a [routerLink]="['/product', item.slug]" class="view-btn mt-1"> -->
+                      <a [routerLink]="['/product', item.slug]">
+                          <i class="icon icon-screen-full"></i>
+                      </a>
+                </div>
 
-            <div class="product-item">
-
-              <div class="image-holder">
-                <!-- <img
-                src="'http://127.0.0.1:8000/storage/'{{item.product_images[0].image_url}}"
-                 alt="{{item.name}}"
-                class="product-image img-fluid">
-              </div> -->
-              <img 
-[src]="item.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + item.product_images[0].image_url : 'assets/images/no-image.png'" [alt]="item.name" class="product-image img-fluid">
-
-              </div>
-
-              <div class="cart-concern">
-
-
-                  <a href="#" class="view-btn mt-1">
-                    <i class="icon icon-screen-full"></i>
+                <div class="product-detail d-flex justify-content-between align-items-center mt-2">
+                  <a href="#">
+                    <h5 class="product-title mb-0">{{item.name}}</h5>
                   </a>
-
-                  
+                  <p class="m-0 fs-5 fw-normal">₹{{item.amount}}</p>
+                </div>
               </div>
-
-              <div class="product-detail d-flex justify-content-between align-items-center mt-2">
-
-                <a href="#">
-                  <h5 class="product-title mb-0">
-                    {{item.name}}
-                  </h5>
-                </a>
-
-                <p class="m-0 fs-5 fw-normal">
-                  ₹{{item.amount}}
-                </p>
-
-              </div>
-
             </div>
-
-          </div>
-
         </div>
 
       </main>
