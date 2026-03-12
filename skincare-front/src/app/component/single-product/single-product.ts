@@ -1,19 +1,19 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SingleProduct } from '../../service/single-product';
 
 @Component({
   selector: 'app-single-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './single-product.html',
   styleUrls: ['./single-product.css']
 })
 export class SingleProductComponent implements OnInit {
 
-  product = signal<any>(null);
-  related: any[] = [];
+  product = signal<any>(null);          // Holds single product data
+  related = signal<any[]>([]);          // Holds related products array
 
   constructor(
     private route: ActivatedRoute,
@@ -21,29 +21,21 @@ export class SingleProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const slug = this.route.snapshot.paramMap.get('slug');
+    if (!slug) return;
 
-    if (slug) {
+    this.productService.getSingleProduct(slug).subscribe({
+      next: (res: any) => {
+        this.product.set(res?.data?.product || null);
+        this.related.set(res?.data?.related || []); 
+      },
+      error: (err) => console.error('Product load error', err)
+    });
+  }
 
-      this.productService.getSingleProduct(slug).subscribe({
-        next: (res: any) => {
-
-          console.log('API Response:', res);
-
-          this.product.set(res.data.product);
-          console.log(this.product)
-          if(res.data.related){
-            this.related = res.data.related;
-          }
-
-        },
-        error: (err) => {
-          console.error('Product load error', err);
-        }
-      });
-
-    }
-
+  // Add to cart function
+  addToCart(product: any) {
+    console.log('Added to cart:', product);
+    // TODO: Call your CartService here
   }
 }

@@ -1,6 +1,8 @@
 
-  <section id="banner" style="background-image:url(assets/images/banner-img2.jpg); background-repeat: no-repeat; background-position: center;">
-    <div class="container padding-medium-2">
+<section id="banner"
+style="background-image: url('assets/images/banner-img2.jpg');
+background-repeat: no-repeat;
+background-position: center;">    <div class="container padding-medium-2">
       <div class="hero-content text-center">
         <h2 class="display-1 text-uppercase text-light mt-5 mb-0">Contact</h2>
 
@@ -68,36 +70,37 @@
           <div class="rounded-5">
             <h2>Get in Touch</h2>
             <p>Use the form below to get in touch with us.</p>
-            <form name="contactform" action="contact.php" method="post" class="form-group contact-form mt-4">
-              <div class="form-input col-lg-12 d-flex justify-content-between mb-3">
-                <div class="w-100 me-3">
-                  <label class="mb-2 fs-6">Your Name*</label>
-                  <input type="text" name="name" placeholder="Write Your Name Here" class="form-control shadow-none px-3 py-2" required="">
-                </div>
-                <div class="w-100">
-                  <label class="mb-2 fs-6">Your E-mail*</label>
-                  <input type="email" name="email" placeholder="Write Your Email Here" class="form-control shadow-none px-3 py-2" required="">
-                </div>
+<form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" class="form-group contact-form mt-4">
+  <div class="form-input col-lg-12 d-flex justify-content-between mb-3">
+    <div class="w-100 me-3">
+      <label class="mb-2 fs-6">Your Name*</label>
+      <input type="text" name="name" [(ngModel)]="contactData.name" placeholder="Write Your Name Here" class="form-control shadow-none px-3 py-2" required>
+    </div>
+    <div class="w-100">
+      <label class="mb-2 fs-6">Your E-mail*</label>
+      <input type="email" name="email" [(ngModel)]="contactData.email" placeholder="Write Your Email Here" class="form-control shadow-none px-3 py-2" required>
+    </div>
+  </div>
 
-              </div>
-              <div class="col-lg-12 mb-3">
-                <label class="mb-2 fs-6">Phone Number</label>
-                <input type="number" name="phone" placeholder="Phone Number" class="form-control shadow-none px-3 py-2">
-              </div>
-              <div class="col-lg-12 mb-3">
-                <label class="mb-2 fs-6">Subject</label>
+  <div class="col-lg-12 mb-3">
+    <label class="mb-2 fs-6">Phone Number</label>
+    <input type="text" name="phone" [(ngModel)]="contactData.phone" placeholder="Phone Number" class="form-control shadow-none px-3 py-2">
+  </div>
 
-                <input type="text" name="subject" placeholder="Write Your Subject Here" class="form-control shadow-none px-3 py-2">
-              </div>
-              <div class="col-lg-12 mb-3">
-                <label class="mb-2 fs-6">Your Message*</label>
+  <div class="col-lg-12 mb-3">
+    <label class="mb-2 fs-6">Subject</label>
+    <input type="text" name="subject" [(ngModel)]="contactData.subject" placeholder="Write Your Subject Here" class="form-control shadow-none px-3 py-2">
+  </div>
 
-                <textarea name="message" placeholder="Write Your Message Here" class="form-control shadow-none px-3 py-2" style="height:150px;" required=""></textarea>
-              </div>
-              <div class="d-grid">
-                <button type="submit" name="submit" class="btn btn-arrow btn-primary btn-lg btn-dark fs-6">Submit</button>
-              </div>
-            </form>
+  <div class="col-lg-12 mb-3">
+    <label class="mb-2 fs-6">Your Message*</label>
+    <textarea name="message" [(ngModel)]="contactData.message" placeholder="Write Your Message Here" class="form-control shadow-none px-3 py-2" style="height:150px;" required></textarea>
+  </div>
+
+  <div class="d-grid">
+    <button type="submit" [disabled]="!contactForm.form.valid" class="btn btn-arrow btn-primary btn-lg btn-dark fs-6">Submit</button>
+  </div>
+</form>
           </div>
         </div>
       </div>

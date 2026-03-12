@@ -4,10 +4,9 @@ import { Footer } from './component/layout/footer/footer';
 import { Header } from './component/layout/header/header';
 import { ShopComponent } from './component/shop/shop';
 import { SingleProductComponent } from './component/single-product/single-product';
-import { Index } from './component/index/index';
+import { IndexComponent as Index } from './component/index';
 import { About } from './component/about/about';
-import { Contact } from './component/contact/contact';
-
+import { ContactComponent } from './component/contact/contact';
 export const routes: Routes = [
   {
     path: '',
@@ -23,8 +22,7 @@ export const routes: Routes = [
       },
 
       { path: 'about', component: About },
-      { path: 'contact', component: Contact }
-    ]
+      { path: 'contact', component: ContactComponent }    ]
   },
 
   {
