@@ -34,41 +34,27 @@
   </section>
 
   <section id="category">
-    <div class="container-fluid px-3 px-md-5">
-      <div class="row">
-        <div class="col-md-4 position-relative" data-aos="fade-up" data-aos-delay="300">
-          <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
-            <h3 class="text-light text-uppercase">Skincare Essentials</h3>
-          </div>
-          <div class="image-holder zoom-effect">
-            <a href="single-post.html">
-              <img src="assets/images/category1.jpg" alt="Luxury skincare products" class="post-image img-fluid">
-            </a>
-          </div>
+  <div class="container-fluid px-3 px-md-5">
+    <div class="row">
+      <div 
+        class="col-md-4 position-relative" 
+        *ngFor="let category of categories; let i = index"
+        [attr.data-aos-delay]="300 + i * 300"
+        data-aos="fade-up"
+      >
+        <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
+          <h3 class="text-light text-uppercase">{{ category.name }}</h3>
         </div>
-        <div class="col-md-4 position-relative" data-aos="fade-up" data-aos-delay="600">
-          <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
-            <h3 class="text-light text-uppercase">Makeup Collection</h3>
-          </div>
-          <div class="image-holder zoom-effect">
-            <a href="single-post.html">
-              <img src="assets/images/category3.jpg" alt="Premium makeup products" class="post-image img-fluid">
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4 position-relative" data-aos="fade-up" data-aos-delay="900">
-          <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
-            <h3 class="text-light text-uppercase">Fragrance & Scents</h3>
-          </div>
-          <div class="image-holder zoom-effect">
-            <a href="single-post.html">
-              <img src="assets/images/category2.jpg" alt="Luxury perfume bottles" class="post-image img-fluid">
-            </a>
-          </div>
+        <div class="image-holder zoom-effect">
+          <a [routerLink]="['/categories', category.slug]">
+            <!-- <img [src]="category.image_url" [alt]="category.name" class="post-image img-fluid"> -->
+             <img [src]="'http://127.0.0.1:8000/storage/' + category.image_url" [alt]="category.name" class="post-image img-fluid">
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section id="new-arrival" class="product-store">
     <div class="container padding-medium" data-aos="fade-up">
@@ -302,29 +288,7 @@
     </div>
   </section>
 
-  <section id="register"
-    style="background-image:url(assets/images/background-img.jpg); background-repeat: no-repeat; background-position: center;">
-    <div class="container padding-medium" data-aos="fade-up">
-      <div class="row banner-content justify-content-center align-items-center">
-        <div class="col-md-6">
-          <h2 class="display-2">Get <span> <em>20% OFF</em> </span> on your first purchase</h2>
-          <p class="m-0">Sign Up for our newsletter and never miss any offers</p>
-        </div>
-        <div class="col-md-4">
-          <form>
-            <div class="mb-3">
-              <input type="email" class="form-control form-control-lg rounded-3 text-center bg-light" name="email"
-                id="email" placeholder="Enter Your Email Address">
-            </div>
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary btn-lg rounded-3">Register now</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </section>
+    
 
   <section id="best-seller" class="product-store">
     <div class="container padding-medium" data-aos="fade-up">
@@ -648,68 +612,3 @@
     </div>
   </section>
 
-  <div id="blog" class="padding-medium pt-0">
-    <div class="container" data-aos="fade-up">
-      <div class="section-header d-md-flex justify-content-between align-items-center mb-3">
-        <h2 class="display-5 fw-light text-uppercase">Recent Blog Post</h2>
-        <div>
-          <a href="blog.html" class="btn btn-primary">
-            Read Blog</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 my-4" data-aos="fade-up" data-aos-delay="300">
-          <div class="card position-relative">
-            <div class="z-1 position-absolute m-2 px-3 pt-1">
-              <h2 class="text-light display-4 m-0">20<span class="fs-4">MAR</span> </h2>
-            </div>
-            <a href="single-post.html"><img src="assets/images/blog5.jpg" class="img-fluid" alt="Summer skincare routine"></a>
-            <div class="card-body p-0">
-              <a href="single-post.html">
-                <h3 class="pt-4 pb-3 m-0">10 Essential Summer Skincare Tips</h3>
-              </a>
-              <div class="card-text">
-                <p>Protect your skin from sun damage while maintaining that healthy glow. Discover our
-                  expert-recommended summer skincare routine that will keep your complexion radiant all season long.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 my-4" data-aos="fade-up" data-aos-delay="600">
-          <div class="card position-relative">
-            <div class="z-1 position-absolute m-2 px-3 pt-1">
-              <h2 class="text-light display-4 m-0">21<span class="fs-4">MAR</span> </h2>
-            </div>
-            <a href="single-post.html"><img src="assets/images/blog2.jpg" class="img-fluid"
-                alt="Affordable beauty products"></a>
-            <div class="card-body p-0">
-              <a href="single-post.html">
-                <h3 class="pt-4 pb-3 m-0">Luxury Beauty Brands on a Budget</h3>
-              </a>
-              <div class="card-text">
-                <p>You don't need to break the bank for premium beauty results. We've curated the best affordable
-                  alternatives to high-end products that deliver exceptional quality without the luxury price tag.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 my-4" data-aos="fade-up" data-aos-delay="900">
-          <div class="card position-relative">
-            <div class="z-1 position-absolute m-2 px-3 pt-1">
-              <h2 class="text-light display-4 m-0">22<span class="fs-4">MAR</span> </h2>
-            </div>
-            <a href="single-post.html"><img src="assets/images/blog1.jpg" class="img-fluid" alt="Professional makeup tips"></a>
-            <div class="card-body p-0">
-              <a href="single-post.html">
-                <h3 class="pt-4 pb-3 m-0">Pro Makeup Artist Secrets Revealed</h3>
-              </a>
-              <div class="card-text">
-                <p>Learn the techniques that professional makeup artists use to create flawless looks. From foundation
-                  application to perfect winged eyeliner, master these skills for everyday glamour.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
