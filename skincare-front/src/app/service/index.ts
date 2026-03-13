@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Index {
-  private apiUrl = 'http://localhost:8080/api/products'; // Replace with your backend API URL
+export class SliderService {
+
+  private api = "http://127.0.0.1:8000/api/front/";
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<any> {
-    return this.http.get(this.apiUrl);
-  } 
-
+  // Fetch sliders from the homepage API
+  getSliders(): Observable<any[]> {
+    return this.http.get<any>(this.api + 'home').pipe(
+      map(response => response.data.sliders) // extract sliders from homepage response
+    );
+  }
 }
