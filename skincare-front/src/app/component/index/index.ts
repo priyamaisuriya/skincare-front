@@ -3,6 +3,7 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import Swiper from 'swiper/bundle';
 
 @Component({
   selector: 'app-index',
@@ -23,6 +24,18 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSlidersAndData();
+  }
+   ngAfterViewInit(): void {
+    new Swiper('.slideshow', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      autoplay: {
+        delay: 3000
+      }
+    });
   }
 
   loadSlidersAndData(): void {
