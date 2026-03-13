@@ -1,16 +1,15 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../service/category';
-import { Shop } from '../../service/shop';
 import { ProductService } from '../../service/product';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
-  standalone: true,   
-  imports: [CommonModule, RouterModule],   
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './shop.html',
-  styleUrls: ['./shop.css'] 
+  styleUrls: ['./shop.css']
 })
 export class ShopComponent implements OnInit {
 
@@ -24,42 +23,48 @@ export class ShopComponent implements OnInit {
   searchTerm:string = '';
 
   constructor(
-    private category: CategoryService,
-    private Shop: Shop,
-    private product: ProductService,
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
 
+    // categories load
     this.loadCategories();
-    this.loadProducts();
 
-    // localStorage only in browser
-    if (isPlatformBrowser(this.platformId)) {
+    // slug detect
+    this.route.paramMap.subscribe(params => {
 
-      const catId = localStorage.getItem('category_id');
+      const slug = params.get('slug');
 
-      if(catId){
-        this.selectedCategory = catId;
-        localStorage.removeItem('category_id');
+      if(slug){
+        this.selectedCategory = slug;
+      }else{
+        this.selectedCategory = '';
       }
 
-    }
+      this.loadProducts();
+
+    });
 
   }
 
+  // Load Categories
   loadCategories() {
-    this.category.getCategories().subscribe({
+    this.categoryService.getCategories().subscribe({
       next: (res: any) => {
-        this.categories = res.data;
+        this.categories = res.data || [];
       },
       error: (err: any) => console.error(err)
     });
   }
 
+  // Load Products
   loadProducts() {
-    this.Shop.getShopData().subscribe({
+
+    this.productService.getProducts(this.selectedCategory).subscribe({
       next: (res: any) => {
 
         this.products = res.data || [];
@@ -68,16 +73,15 @@ export class ShopComponent implements OnInit {
         this.applyFilters();
 
       },
-      error: (err: any) => console.error('Failed to load shop products', err)
+      error: (err: any) => console.error('Failed to load products', err)
     });
+
   }
 
+  // Apply Filters
   applyFilters(){
 
     this.products = this.allProducts.filter((p:any)=>{
-
-      const categoryMatch =
-        !this.selectedCategory || p.category_id == this.selectedCategory;
 
       const priceMatch =
         (this.minPrice === 0 && this.maxPrice === 0) ||
@@ -87,28 +91,32 @@ export class ShopComponent implements OnInit {
       const searchMatch =
         !this.searchTerm || p.name.toLowerCase().includes(this.searchTerm);
 
-      return categoryMatch && priceMatch && searchMatch;
+      return priceMatch && searchMatch;
 
     });
 
   }
 
-  categoryFilter(categoryId:any){
-    this.selectedCategory = categoryId;
-    this.applyFilters();
+  // Category Filter
+  categoryFilter(categorySlug:any){
+    this.selectedCategory = categorySlug;
+    this.loadProducts();
   }
 
+  // Price Filter
   priceFilter(min:number,max:number){
     this.minPrice = min;
     this.maxPrice = max;
     this.applyFilters();
   }
 
+  // Search
   searchProduct(event:any){
     this.searchTerm = event.target.value.toLowerCase();
     this.applyFilters();
   }
 
+  // Sorting
   sortProduct(event:any){
 
     const value = event.target.value;

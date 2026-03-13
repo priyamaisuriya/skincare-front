@@ -11,7 +11,7 @@
     <div class="order-md-last">
 
 
-      <button class="w-100 btn btn-dark" type="submit">Continue to checkout</button>
+      <!-- <button class="w-100 btn btn-dark" type="submit">Continue to checkout</button> -->
     </div>
   </div>
 </div>
@@ -63,44 +63,31 @@
             <img src="assets/images/logo.png" alt="logo" class="img-fluid"> </a>
         </div>
 
-        <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
+      <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
+
           <li class="nav-link mx-2 active">
-            <!-- <a href="#" class="nav-link mx-2 active">Home</a> -->
             <a routerLink="/" class="nav-link mx-2 active">Home</a>
           </li>
 
-          <!-- <li *ngFor="let cat of categories"  class="nav-link mx-2 active"> 
-            <a  class="nav-link mx-2 active" [routerLink]="'/shop/'+cat.id">
+          <li *ngFor="let cat of categories" class="nav-link mx-2">
+            <a class="nav-link mx-2"
+              [routerLink]="['/shop', cat.slug]">
               {{cat.name}}
             </a>
-          </li> -->
-          <li *ngFor="let cat of categories" class="nav-link mx-2 active">
-            <!-- <a class="nav-link mx-2 active" [routerLink]="['/shop', cat.id]"> -->
-              <a class="nav-link mx-2 active" routerLink="/shop" (click)="selectCategory(cat.id)">
-  {{cat.name}}
-</a>
-              <!-- {{cat.name}}
-            </a> -->
           </li>
 
         </ul>
-
         <div class="d-none d-lg-flex justify-content-end">
           <ul class="d-flex justify-content-end list-unstyled m-0">
             <li class="lh-1">
-              <a href="account.html" class="mx-3">
-                <iconify-icon icon="healthicons:person" class="fs-4 text-light"></iconify-icon>
-              </a>
+            
             </li>
 
 
 
 
             <li class="lh-1">
-              <a href="#" class="mx-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
-                aria-controls="offcanvasSearch">
-                <iconify-icon icon="tabler:search" class="fs-4 text-light"></iconify-icon>
-              </a>
+             
             </li>
 
           </ul>

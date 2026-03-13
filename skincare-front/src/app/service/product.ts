@@ -6,30 +6,32 @@ import { Injectable } from '@angular/core';
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  // All Products
-  getProducts(category: any = '', search: any = '', sort: any = '') {
+  // All Products / Category Products
+  getProducts(category:any='', search:any='', sort:any=''){
     return this.http.get(
-      `http://127.0.0.1:8000/api/products?category=${category}&search=${search}&sort=${sort}`
+      `http://127.0.0.1:8000/api/front/shop?category=${category}&search=${search}&sort=${sort}`
     );
   }
 
   // New Products
-  getNewProducts() {
-    // Uses the getProducts method with sort='new'
+  getNewProducts(){
     return this.getProducts('', '', 'new');
   }
 
   // Categories
-  getCategories() {
-    return this.http.get('http://127.0.0.1:8000/api/categories');
+  getCategories(){
+    return this.http.get(
+      'http://127.0.0.1:8000/api/categories'
+    );
   }
 
-  // Single Product by slug
-  getSingleProduct(slug: any) {
+  // Single Product
+  getSingleProduct(slug:any){
     return this.http.get(
       `http://127.0.0.1:8000/api/front/products/${slug}`
     );
   }
+
 }

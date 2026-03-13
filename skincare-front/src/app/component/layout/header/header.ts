@@ -7,7 +7,7 @@ import { CategoryService } from '../../../service/category';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],   
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,10 +30,6 @@ export class Header implements OnInit {
       },
       error: (err: any) => console.error(err)
     });
-  }
-
-  selectCategory(id:any){
-    localStorage.setItem('category_id', id);
   }
 
 }
