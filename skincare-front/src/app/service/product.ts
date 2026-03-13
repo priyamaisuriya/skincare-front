@@ -9,22 +9,27 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   // All Products
-  getProducts(category:any='', search:any='', sort:any=''){
+  getProducts(category: any = '', search: any = '', sort: any = '') {
     return this.http.get(
-      'http://127.0.0.1:8000/api/products?category='+category+'&search='+search+'&sort='+sort
+      `http://127.0.0.1:8000/api/products?category=${category}&search=${search}&sort=${sort}`
     );
   }
 
+  // New Products
+  getNewProducts() {
+    // Uses the getProducts method with sort='new'
+    return this.getProducts('', '', 'new');
+  }
+
   // Categories
-  getCategories(){
+  getCategories() {
     return this.http.get('http://127.0.0.1:8000/api/categories');
   }
 
-  // Single Product by ID
-  getSingleProduct(slug:any){
-  return this.http.get(
-    'http://127.0.0.1:8000/api/front/products/' + slug
-  );
-}
-
+  // Single Product by slug
+  getSingleProduct(slug: any) {
+    return this.http.get(
+      `http://127.0.0.1:8000/api/front/products/${slug}`
+    );
+  }
 }
