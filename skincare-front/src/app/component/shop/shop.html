@@ -117,11 +117,13 @@
                   {{cat.name}}
                 </a>
               </li> -->
-   <li *ngFor="let cat of categories()" class="cat-item">
-  <a [routerLink]="['/shop', cat.slug]">
+       <li *ngFor="let cat of categories()" class="cat-item">
+  <a href="javascript:void(0)" (click)="categoryFilter(cat.slug)">
     {{ cat.name }}
   </a>
-</li>
+</li> 
+
+
 
 <!--               
           <li *ngFor="let cat of categories"  class="nav-link mx-2 active"> 
