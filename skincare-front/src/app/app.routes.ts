@@ -5,6 +5,9 @@ import { SingleProductComponent } from './component/single-product/single-produc
 import { IndexComponent as Index } from './component/index';
 import { About } from './component/about/about';
 import { ContactComponent } from './component/contact/contact';
+import { BestSeller } from './component/best-seller/best-seller';
+import { NewArrivals } from './component/new-arrivals/new-arrivals';
+
 
 export const routes: Routes = [
   {
@@ -23,7 +26,11 @@ export const routes: Routes = [
 
       { path: 'contact', component: ContactComponent },
 
-      { path: 'single-product/:slug', component: SingleProductComponent }
+      { path: 'single-product/:slug', component: SingleProductComponent },
+
+      {path : 'bestseller' , component : BestSeller },
+
+      {path : 'NewArrivals' , component : NewArrivals }
 
     ]
   },
