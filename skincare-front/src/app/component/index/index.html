@@ -1,14 +1,18 @@
+<!-- HERO / SLIDER SECTION -->
 <section id="hero">
   <div class="swiper slideshow">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" *ngFor="let slide of sliders"
-           [style.backgroundImage]="'url(' + slide.image_url + ')'"
-           style="background-repeat: no-repeat; background-position: center; height:950px;">
+      <div 
+        class="swiper-slide" 
+        *ngFor="let slide of sliders()" 
+        [style.backgroundImage]="'url(' + slide.image_url + ')'"
+        style="background-repeat: no-repeat; background-position: center; height:950px;"
+      >
         <div class="container padding-large">
           <div class="row justify-content-end">
-            <div class="col-lg-6" data-aos="fade-up">
+            <div class="col-lg-6 text-white">
               <h2 class="display-1 text-uppercase text-white mt-3">{{ slide.name }}</h2>
-              <p class="text-capitalize text-white fs-5 mb-4">{{ slide.description }}</p>
+              <p class="text-capitalize fs-5 mb-4">{{ slide.description }}</p>
               <a [href]="slide.link" class="btn btn-light">Shop Now</a>
             </div>
           </div>
@@ -19,37 +23,40 @@
   </div>
 </section>
 
-  <section class="logo-bar">
-    <div class="container padding-medium" data-aos="fade-up">
-      <div class="row ">
-        <div class="logo-content d-flex flex-wrap justify-content-between">
-          <a href="#"> <img src="assets/images/logo1.png" alt="logo" class="logo-image img-fluid my-3"> </a>
-          <a href="#"> <img src="assets/images/logo2.png" alt="logo" class="logo-image img-fluid my-3"> </a>
-          <a href="#"> <img src="assets/images/logo3.png" alt="logo" class="logo-image img-fluid my-3"> </a>
-          <a href="#"> <img src="assets/images/logo4.png" alt="logo" class="logo-image img-fluid my-3"> </a>
-          <a href="#"> <img src="assets/images/logo5.png" alt="logo" class="logo-image img-fluid my-3"> </a>
-        </div>
+<br>
+<br>
+<!-- LOGO BAR -->
+<section class="logo-bar py-4">
+  <div class="container">
+    <div class="row">
+      <div class="logo-content d-flex flex-wrap justify-content-between">
+        <a href="#" *ngFor="let logo of [1,2,3,4,5]">
+          <img [src]="'assets/images/logo' + logo + '.png'" alt="logo" class="logo-image img-fluid my-3">
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-<section id="category">
+<!-- CATEGORIES SECTION -->
+<section id="category" class="my-5">
   <div class="container-fluid px-3 px-md-5">
     <div class="row">
       <div 
-        class="col-md-4 position-relative" 
-        *ngFor="let category of categories; let i = index"
+        class="col-md-4 position-relative mb-4" 
+        *ngFor="let category of categories(); let i = index"
         [attr.data-aos-delay]="300 + i * 300"
-        data-aos="fade-up"
       >
         <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
           <h3 class="text-light text-uppercase">{{ category.name }}</h3>
         </div>
-        
         <div class="image-holder zoom-effect">
           <a [routerLink]="['/categories', category.slug]">
-            <!-- <img [src]="category.image_url" [alt]="category.name" class="post-image img-fluid"> -->
-             <img [src]="'http://127.0.0.1:8000/storage/' + category.image_url" [alt]="category.name" class="post-image img-fluid">
+            <img 
+              [src]="'http://127.0.0.1:8000/storage/' + category.image_url" 
+              [alt]="category.name" 
+              class="post-image img-fluid"
+            >
           </a>
         </div>
       </div>
@@ -57,127 +64,79 @@
   </div>
 </section>
 
-<section id="new-arrival" class="product-store">
-  <div class="container padding-medium" data-aos="fade-up">
+<!-- NEW ARRIVALS SECTION -->
+<section id="new-arrival" class="product-store py-5">
+  <div class="container">
     <h2 class="display-5 fw-light text-uppercase text-center">New Arrivals</h2>
     <p class="text-center mb-4">Browse our brand new collections</p>
-
     <div class="row">
-
-      <!-- Dynamic New Products -->
-      <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of newProducts">
-        
-        <div class="product-item position-relative">
-
-
+      <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of newProducts()">
+        <div class="product-item position-relative border rounded p-2">
           <div class="image-holder">
-             <img   [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
-                   [alt]="product.name" 
-                    class="product-image img-fluid" >
+            <img 
+              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
+              [alt]="product.name" 
+              class="product-image img-fluid"
+            >
           </div>
-
-          <!-- <div class="cart-concern">
-            <div class="cart-button d-flex justify-content-between align-items-center">
-
-
-            <a [routerLink]="['/single-product', product.slug]" class="view-btn mt-1">
-  <i class="icon icon-screen-full"></i>
-</a>
-
-             
-
-            </div>
-          </div> -->
-
-            <div class="cart-concern">
-                     <!-- <a [routerLink]="['/product', item.slug]" class="view-btn mt-1"> -->
-                      <a [routerLink]="['/product', product.slug]">
-                          <i class="icon icon-screen-full"></i>
-                      </a>
-                </div>
-
+          <div class="cart-concern mt-1">
+            <a [routerLink]="['/product', product.slug]">
+              <i class="icon icon-screen-full"></i>
+            </a>
+          </div>
           <div class="product-detail d-flex justify-content-between align-items-center mt-2">
             <a [routerLink]="['/single-product', product.slug]">
-              <h5 class="product-title mb-0">
-                {{ product.name }}
-              </h5>
+              <h5 class="product-title mb-0">{{ product.name }}</h5>
             </a>
-
-            <p class="m-0 fs-5 fw-normal">
-              ₹{{ product.amount }}
-            </p>
+            <p class="m-0 fs-5 fw-normal">₹{{ product.amount }}</p>
           </div>
-
         </div>
-
       </div>
-
     </div>
-
     <div class="text-center mt-5 pt-4">
-      <button type="submit" class="btn btn-primary">View All Products</button>
+      <button class="btn btn-primary">View All Products</button>
     </div>
-
   </div>
 </section>
-    
-<section id="best-seller" class="product-store">
-  <div class="container padding-medium" data-aos="fade-up">
+
+<!-- BEST SELLERS SECTION -->
+<section id="best-seller" class="product-store py-5 bg-light">
+  <div class="container">
     <h2 class="display-5 fw-light text-uppercase text-center">Best Sellers</h2>
     <p class="text-center mb-4">Elevate your daily looks with our best sellers</p>
-
     <div class="row">
-
-      <!-- Dynamic Best Seller Products -->
-      <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of bestSellers">
-
-        <div class="product-item position-relative">
-
-         
-
+      <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of bestSellers()">
+        <div class="product-item position-relative border rounded p-2">
           <div class="image-holder">
-           <img   [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
-                   [alt]="product.name" 
-                    class="product-image img-fluid" >
+            <img 
+              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
+              [alt]="product.name" 
+              class="product-image img-fluid"
+            >
           </div>
-
-             <div class="cart-concern">
-                     <!-- <a [routerLink]="['/product', item.slug]" class="view-btn mt-1"> -->
-                      <a [routerLink]="['/product', product.slug]">
-                          <i class="icon icon-screen-full"></i>
-                      </a>
-                </div>
-          
-
-          <div class="product-detail d-flex justify-content-between align-items-center mt-2">
-
-            <a [routerLink]="['/single-product', product.slug]">
-              <h5 class="product-title mb-0">
-                {{ product.name }}
-              </h5>
+          <div class="cart-concern mt-1">
+            <a [routerLink]="['/product', product.slug]">
+              <i class="icon icon-screen-full"></i>
             </a>
-
-            <p class="m-0 fs-5 fw-normal">
-              ₹{{ product.amount }}
-            </p>
-
           </div>
-
+          <div class="product-detail d-flex justify-content-between align-items-center mt-2">
+            <a [routerLink]="['/single-product', product.slug]">
+              <h5 class="product-title mb-0">{{ product.name }}</h5>
+            </a>
+            <p class="m-0 fs-5 fw-normal">₹{{ product.amount }}</p>
+          </div>
         </div>
-
       </div>
-
     </div>
-
     <div class="text-center mt-5 pt-4">
-      <button type="submit" class="btn btn-primary">View All Products</button>
+      <button class="btn btn-primary">View All Products</button>
     </div>
-
   </div>
 </section>
 
-  <section class="testimonials bg-primary padding-medium"
-    style="background-image:url(assets/images/background-img1.jpg); background-repeat: no-repeat; background-position: center;">
+
+<section class="testimonials bg-primary padding-medium"
+  style="background-image: url('assets/images/background-img1.jpg'); background-repeat: no-repeat; background-position: center;">
     <div class="swiper testimonial-swiper overflow-hidden" data-aos="fade-up">
       <div class="swiper-wrapper d-flex">
         <div class="swiper-slide">
@@ -217,7 +176,8 @@
       </div>
     </div>
   </section>
- <section id="service" class="padding-medium">
+
+  <section id="service" class="padding-medium">
     <div class="container" data-aos="fade-up">
       <div class="row">
         <div class="col-md-3 my-3">
@@ -268,3 +228,4 @@
       </div>
     </div>
   </section>
+

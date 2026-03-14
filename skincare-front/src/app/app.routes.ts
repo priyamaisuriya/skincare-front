@@ -21,7 +21,9 @@ export const routes: Routes = [
 
       { path: 'about', component: About },
 
-      { path: 'contact', component: ContactComponent }
+      { path: 'contact', component: ContactComponent },
+
+      { path: 'single-product/:slug', component: SingleProductComponent }
 
     ]
   },

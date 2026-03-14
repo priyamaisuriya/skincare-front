@@ -12,8 +12,8 @@ import { SingleProduct } from '../../service/single-product';
 })
 export class SingleProductComponent implements OnInit {
 
-  product = signal<any>(null);          // Holds single product data
-  related = signal<any[]>([]);          // Holds related products array
+  product = signal<any>(null);           
+  related = signal<any[]>([]);          
 
   constructor(
     private route: ActivatedRoute,
@@ -21,21 +21,28 @@ export class SingleProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (!slug) return;
+    // Subscribe to slug changes
+    this.route.paramMap.subscribe(params => {
+      const slug = params.get('slug');
+      if (!slug) return;
 
+      this.loadProduct(slug);
+      window.scroll(0,0)
+    });
+  }
+
+  loadProduct(slug: string) {
     this.productService.getSingleProduct(slug).subscribe({
       next: (res: any) => {
         this.product.set(res?.data?.product || null);
-        this.related.set(res?.data?.related || []); 
+        this.related.set(res?.data?.related || []);
+        console.table(res.data.related)
       },
       error: (err) => console.error('Product load error', err)
     });
   }
 
-  // Add to cart function
   addToCart(product: any) {
     console.log('Added to cart:', product);
-    // TODO: Call your CartService here
   }
 }

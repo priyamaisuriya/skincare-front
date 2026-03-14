@@ -1,9 +1,9 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
 
 @Component({
   selector: 'app-index',
@@ -13,47 +13,59 @@ import Swiper from 'swiper/bundle';
   imports: [CommonModule, HttpClientModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, AfterViewInit {
 
-  sliders: any[] = [];
-  categories: any[] = [];
-  newProducts: any[] = [];
-  bestSellers: any[] = []; // <-- added bestSellers
+  sliders = signal<any[]>([]);
+  categories = signal<any[]>([]);
+  newProducts = signal<any[]>([]);
+  bestSellers = signal<any[]>([]);
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadSlidersAndData();
   }
-   ngAfterViewInit(): void {
-    new Swiper('.slideshow', {
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-      autoplay: {
-        delay: 3000
-      }
-    });
+
+  ngAfterViewInit(): void {
+  if (typeof window !== 'undefined') { 
+    setTimeout(() => {
+      // Hero slideshow
+      new Swiper('.slideshow', {
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination-slideshow',
+          clickable: true
+        },
+        autoplay: { delay: 3000 }
+      });
+
+      // Testimonials
+      new Swiper('.testimonial-swiper', {
+        loop: true,
+        autoplay: { delay: 4000 },
+        slidesPerView: 1,
+        spaceBetween: 20,
+      });
+    }, 500);
   }
+}
 
   loadSlidersAndData(): void {
     this.http.get<any>('http://127.0.0.1:8000/api/front/home')
       .subscribe({
         next: (res) => {
-          this.sliders = res.data.sliders;
-          this.categories = res.data.categories;
-          this.newProducts = res.data.new_products;
-          this.bestSellers = res.data.best_sellers; // <-- fetch best sellers
+          this.sliders.set(res.data.sliders || []);
+          this.categories.set(res.data.categories || []);
+          this.newProducts.set(res.data.new_products || []);
+          this.bestSellers.set(res.data.best_sellers || []);
 
-          console.log('Sliders loaded:', this.sliders);
-          console.log('Categories loaded:', this.categories);
-          console.log('New Products loaded:', this.newProducts);
-          console.log('Best Sellers loaded:', this.bestSellers);
+          console.log('Sliders:', this.sliders());
+          console.log('Categories:', this.categories());
+          console.log('New Products:', this.newProducts());
+          console.log('Best Sellers:', this.bestSellers());
         },
-        error: (err) => { 
-          console.error('Failed to load data:', err); 
+        error: (err) => {
+          console.error('Failed to load data:', err);
         }
       });
   }
