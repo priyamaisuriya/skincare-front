@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../service/category';
 import { ProductService } from '../../service/product';
@@ -13,14 +13,14 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 })
 export class ShopComponent implements OnInit {
 
-  categories: any[] = [];
-  products: any[] = [];
-  allProducts: any[] = [];
+  categories = signal<any>(null);
+  products = signal<any[]>([]);
+  allProducts = signal<any[]>([]);
 
-  selectedCategory:any = '';
-  minPrice:number = 0;
-  maxPrice:number = 0;
-  searchTerm:string = '';
+  selectedCategory: any = '';
+  minPrice: number = 0;
+  maxPrice: number = 0;
+  searchTerm: string = '';
 
   constructor(
     private categoryService: CategoryService,
@@ -30,18 +30,18 @@ export class ShopComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    // categories load
+    console.log("on it")
+    // load categories
     this.loadCategories();
 
-    // slug detect
+    // detect category slug from URL
     this.route.paramMap.subscribe(params => {
 
       const slug = params.get('slug');
 
-      if(slug){
+      if (slug) {
         this.selectedCategory = slug;
-      }else{
+      } else {
         this.selectedCategory = '';
       }
 
@@ -53,12 +53,16 @@ export class ShopComponent implements OnInit {
 
   // Load Categories
   loadCategories() {
+
     this.categoryService.getCategories().subscribe({
       next: (res: any) => {
-        this.categories = res.data || [];
+        console.log("getcategpry")
+        this.categories.set(res?.data || null);
+
       },
       error: (err: any) => console.error(err)
     });
+
   }
 
   // Load Products
@@ -67,8 +71,8 @@ export class ShopComponent implements OnInit {
     this.productService.getProducts(this.selectedCategory).subscribe({
       next: (res: any) => {
 
-        this.products = res.data || [];
-        this.allProducts = res.data || [];
+        this.products.set(res.data || []);
+        this.allProducts.set(res.data || []);
 
         this.applyFilters();
 
@@ -79,9 +83,9 @@ export class ShopComponent implements OnInit {
   }
 
   // Apply Filters
-  applyFilters(){
+  applyFilters() {
 
-    this.products = this.allProducts.filter((p:any)=>{
+    const filtered = this.allProducts().filter((p: any) => {
 
       const priceMatch =
         (this.minPrice === 0 && this.maxPrice === 0) ||
@@ -95,43 +99,57 @@ export class ShopComponent implements OnInit {
 
     });
 
+    this.products.set(filtered);
+
   }
 
   // Category Filter
-  categoryFilter(categorySlug:any){
+  categoryFilter(categorySlug: any) {
+
     this.selectedCategory = categorySlug;
     this.loadProducts();
+
   }
 
   // Price Filter
-  priceFilter(min:number,max:number){
+  priceFilter(min: number, max: number) {
+
     this.minPrice = min;
     this.maxPrice = max;
+
     this.applyFilters();
+
   }
 
-  // Search
-  searchProduct(event:any){
+  // Search Product
+  searchProduct(event: any) {
+
     this.searchTerm = event.target.value.toLowerCase();
+
     this.applyFilters();
+
   }
 
   // Sorting
-  sortProduct(event:any){
+  sortProduct(event: any) {
 
     const value = event.target.value;
 
+    const sorted = [...this.products()];
+
     if (value === 'name_asc')
-      this.products.sort((a:any,b:any)=> a.name.localeCompare(b.name));
+      sorted.sort((a: any, b: any) => a.name.localeCompare(b.name));
 
     else if (value === 'name_desc')
-      this.products.sort((a:any,b:any)=> b.name.localeCompare(a.name));
+      sorted.sort((a: any, b: any) => b.name.localeCompare(a.name));
 
     else if (value === 'price_low')
-      this.products.sort((a:any,b:any)=> Number(a.amount) - Number(b.amount));
+      sorted.sort((a: any, b: any) => Number(a.amount) - Number(b.amount));
 
     else if (value === 'price_high')
-      this.products.sort((a:any,b:any)=> Number(b.amount) - Number(a.amount));
+      sorted.sort((a: any, b: any) => Number(b.amount) - Number(a.amount));
+
+    this.products.set(sorted);
 
   }
 

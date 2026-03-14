@@ -63,20 +63,44 @@
             <img src="assets/images/logo.png" alt="logo" class="img-fluid"> </a>
         </div>
 
-      <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
+<ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
 
-          <li class="nav-link mx-2 active">
-            <a routerLink="/" class="nav-link mx-2 active">Home</a>
-          </li>
+  <!-- Home -->
+  <li class="nav-link mx-2 active">
+    <a routerLink="/" class="nav-link mx-2 active">Home</a>
+  </li>
 
-          <li *ngFor="let cat of categories" class="nav-link mx-2">
-            <a class="nav-link mx-2"
-              [routerLink]="['/shop', cat.slug]">
-              {{cat.name}}
-            </a>
-          </li>
+  <!-- Only Parent Categories -->
+ <ng-container *ngFor="let cat of categories()">
 
-        </ul>
+  <!-- Skip child categories -->
+  <ng-container *ngIf="!cat.parent_id">
+
+    <!-- Category WITHOUT children -->
+    <li *ngIf="!cat.children || cat.children.length === 0" class="nav-link mx-2">
+      <a class="nav-link mx-2" [routerLink]="['/shop', cat.slug]">
+        {{ cat.name }}
+      </a>
+    </li>
+
+    <!-- Category WITH children -->
+    <li *ngIf="cat.children && cat.children.length > 0" class="nav-link dropdown mx-2">
+      <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">
+        {{ cat.name }}
+      </a>
+      <ul class="dropdown-menu">
+        <li *ngFor="let child of cat.children">
+          <a class="dropdown-item" [routerLink]="['/shop', child.slug]">
+            {{ child.name }}
+          </a>
+        </li>
+      </ul>
+    </li>
+
+  </ng-container>
+
+</ng-container>
+</ul>
         <div class="d-none d-lg-flex justify-content-end">
           <ul class="d-flex justify-content-end list-unstyled m-0">
             <li class="lh-1">

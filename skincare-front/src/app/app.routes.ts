@@ -14,7 +14,6 @@ export const routes: Routes = [
 
       { path: '', component: Index },
 
-      { path: 'shop', component: ShopComponent },
 
       { path: 'shop/:slug', component: ShopComponent },
 

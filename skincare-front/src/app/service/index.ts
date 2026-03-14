@@ -17,4 +17,4 @@ export class SliderService {
       map(response => response.data.sliders) // extract sliders from homepage response
     );
   }
-}
+} 

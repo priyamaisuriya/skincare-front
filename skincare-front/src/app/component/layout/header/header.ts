@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../../service/category';
@@ -14,9 +14,10 @@ import { CategoryService } from '../../../service/category';
 })
 export class Header implements OnInit {
 
-  categories:any[]=[];
+  // Initialize signal as empty array
+  categories = signal<any[]>([]);
 
-  constructor(private category:CategoryService, private cdr: ChangeDetectorRef){}
+  constructor(private category: CategoryService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -25,8 +26,9 @@ export class Header implements OnInit {
   loadCategories() {
     this.category.getCategories().subscribe({
       next: (res: any) => {
-        this.categories = res.data;
-        this.cdr.markForCheck();
+        console.log('Backend Response:', res);
+        this.categories.set(res?.data || []);
+        this.cdr.markForCheck(); 
       },
       error: (err: any) => console.error(err)
     });

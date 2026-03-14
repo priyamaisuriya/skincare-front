@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SliderService {
-  apiUrl = 'http://127.0.0.1:8000/api/sliders'; // your backend endpoint
+  apiUrl = 'http://127.0.0.1:8000/api/newarrvi'; // your backend endpoint
 
   constructor(private http: HttpClient) {}
 

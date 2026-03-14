@@ -15,7 +15,7 @@
         <div class="filter-shop d-md-flex justify-content-between align-items-center">
 
           <div class="showing-product">
-            <p class="m-0">Showing {{products.length}} results</p>
+            <p class="m-0">Showing {{products().length}} results</p>
           </div>
 
           <div class="sort-by">
@@ -43,11 +43,11 @@
 
         <div class="row">
           
-          <div *ngIf="products.length == 0" class="col-12 text-center no-product">
+          <div *ngIf="products().length == 0" class="col-12 text-center no-product">
             <br><br><br><br><br><br>
           <h4>No Products Found</h4>
         </div>
-            <div class="col-md-6 col-lg-4 my-4" *ngFor="let item of products">
+            <div class="col-md-6 col-lg-4 my-4" *ngFor="let item of products()">
               <div class="product-item">
                 <div class="image-holder">
                   <img 
@@ -117,7 +117,7 @@
                   {{cat.name}}
                 </a>
               </li> -->
-              <li *ngFor="let cat of categories" class="cat-item">
+              <li *ngFor="let cat of categories()" class="cat-item">
                 <a href="javascript:void(0)" (click)="categoryFilter(cat.id)">
                   {{cat.name}}
                 </a>
