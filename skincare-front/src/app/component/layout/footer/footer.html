@@ -1,71 +1,121 @@
-<footer id="footer" class="bg-primary padding-medium">
-  <div class="container text-light">
-    <div class="row">
+  <footer id="footer" class="bg-primary padding-medium">
+    <div class="container text-light">
+      <div class="row">
 
-      <!-- Logo / Intro -->
-      <div class="col-md-4">
-        <div class="footer-menu">
-          <img src="assets/images/logo.png" class="img-fluid" alt="logo">
-          <p class="mt-4">Find and define your perfect beauty</p>
+        <!-- Logo / Intro -->
+        <div class="col-md-4">
+          <div class="footer-menu">
+            <img 
+              *ngIf="settings?.logo"
+              [src]="'http://127.0.0.1:8000/storage/' + settings.logo"
+              class="img-fluid"
+              alt="logo">
+            <!-- ✅ FIXED Description -->
+            <p class="mt-4" *ngIf="settings; else defaultDesc">
+              {{ settings.description }}
+            </p>
+
+            <ng-template #defaultDesc>
+              <p class="mt-4">Find and define your perfect beauty</p>
+            </ng-template>
+          </div>
         </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-2">
+          <div class="footer-menu">
+            <h6 class="text-uppercase fw-bold text-light mb-4">Quick Links</h6>
+            <ul class="menu-list list-unstyled">
+              <li class="menu-item">
+                <a routerLink="/" class="footer-link">Home</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/about" class="footer-link">About Us</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/bestseller" class="footer-link">Best Seller</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/new-arrivals" class="footer-link">New Arrivals</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/contact" class="footer-link">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- About Links -->
+        <div class="col-md-2">
+          <div class="footer-menu">
+            <h6 class="text-uppercase fw-bold text-light mb-4">About</h6>
+            <ul class="menu-list list-unstyled">
+              <li class="menu-item">
+                <a routerLink="/about" class="footer-link">How It Works</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/about" class="footer-link">Our Packages</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/about" class="footer-link">Promotions</a>
+              </li>
+              <li class="menu-item">
+                <a routerLink="/about" class="footer-link">Refer a Friend</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dynamic Categories -->
+        <div class="col-md-2" *ngIf="categories && categories.length > 0">
+          <div class="footer-menu">
+            <h6 class="text-uppercase fw-bold text-light mb-4">Categories</h6>
+            <ul class="menu-list list-unstyled">
+              <li class="menu-item" *ngFor="let category of categories">
+                <a [routerLink]="['/category', category.slug]" class="footer-link">
+                  {{ category.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
       </div>
+    </div>
+  </footer>
 
-      <!-- Quick Links -->
-      <div class="col-md-2">
-        <div class="footer-menu">
-          <h6 class="text-uppercase fw-bold text-light mb-4">Quick Links</h6>
-          <ul class="menu-list list-unstyled">
-            <li class="menu-item"><a routerLink="/" class="footer-link">Home</a></li>
-            <li class="menu-item"><a routerLink="/about" class="footer-link">About Us</a></li>
-            <li class="menu-item"><a routerLink="/bestseller" class="footer-link">Best Seller</a></li>
-            <li class="menu-item"><a routerLink="/new-arrivals" class="footer-link">New Arrivals</a></li>
-            <li class="menu-item"><a routerLink="/contact" class="footer-link">Contact Us</a></li>
-          </ul>
+  <!-- Footer Bottom -->
+  <div id="footer-bottom" class="bg-primary">
+    <hr class="text-light m-0">
+
+    <div class="container text-light pt-3">
+      <div class="row align-items-center">
+
+        <div class="col-md-6 copyright">
+          <p *ngIf="settings; else defaultCopy">
+            © {{ settings.year }} {{ settings.site_name }}. All rights reserved.
+          </p>
+
+          <ng-template #defaultCopy>
+            <p>© 2026 SKN. All rights reserved.</p>
+          </ng-template>
         </div>
+
+        <div class="col-md-6 text-md-end">
+          <a *ngIf="settings; else defaultSite"
+            [href]="settings.website"
+            target="_blank"
+            class="text-light text-decoration-underline">
+            {{ settings.site_name }}
+          </a>
+
+          <ng-template #defaultSite>
+            <a href="#" class="text-light text-decoration-underline">
+              SKN Studio
+            </a>
+          </ng-template>
+        </div>
+
       </div>
-
-      <!-- About Links -->
-      <div class="col-md-2">
-        <div class="footer-menu">
-          <h6 class="text-uppercase fw-bold text-light mb-4">About</h6>
-          <ul class="menu-list list-unstyled">
-            <li class="menu-item"><a [routerLink]="'/about'" class="footer-link">How It Works</a></li>
-            <li class="menu-item"><a [routerLink]="'/about'" class="footer-link">Our Packages</a></li>
-            <li class="menu-item"><a [routerLink]="'/about'" class="footer-link">Promotions</a></li>
-            <li class="menu-item"><a [routerLink]="'/about'" class="footer-link">Refer a Friend</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Dynamic Categories -->
-      <!-- <div class="col-md-2">
-        <div class="footer-menu">
-          <h6 class="text-uppercase fw-bold text-light mb-4">Categories</h6>
-          <ul class="menu-list list-unstyled">
-            <li class="menu-item" *ngFor="let category of categories">
-              <a [routerLink]="['/category', category.slug]" class="footer-link">{{ category.name }}</a>
-            </li>
-          </ul>
-        </div>
-      </div> -->
-
     </div>
   </div>
-</footer>
-
-<!-- Footer Bottom -->
-<div id="footer-bottom" class="bg-primary">
-  <hr class="text-light m-0">
-  <div class="container text-light pt-3">
-    <div class="row">
-      <div class="col-md-6 copyright">
-        <p>© 2026 SKN. All rights reserved.</p>
-      </div>
-      <div class="col-md-6 text-md-end">
-        <a href="https://templatesjungle.com/" target="_blank" class="text-light text-decoration-underline">
-          SKN studio
-        </a>
-      </div>
-    </div>
-  </div>
-</div>

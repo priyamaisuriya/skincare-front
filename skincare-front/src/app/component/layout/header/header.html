@@ -1,33 +1,30 @@
+<!-- Preloader -->
 <div class="preloader-wrapper" style="display: none;">
-  <div class="preloader">
-  </div>
+  <div class="preloader"></div>
 </div>
 
+<!-- Offcanvas Cart -->
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
   <div class="offcanvas-header justify-content-center">
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <div class="order-md-last">
-
-
-      <!-- <button class="w-100 btn btn-dark" type="submit">Continue to checkout</button> -->
+      <!-- Cart content placeholder -->
     </div>
   </div>
 </div>
 
+<!-- Offcanvas Search -->
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch" aria-labelledby="Search">
   <div class="offcanvas-header justify-content-center">
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-
     <div class="order-md-last">
-      <h4 class="text-primary text-uppercase mb-3">
-        Search
-      </h4>
+      <h4 class="text-primary text-uppercase mb-3">Search</h4>
       <div class="search-bar border rounded-2 border-dark-subtle">
-        <form id="search-form" class="text-center d-flex align-items-center" action="" method="">
+        <form id="search-form" class="text-center d-flex align-items-center">
           <input type="text" class="form-control border-0 bg-transparent" placeholder="Search Here">
           <iconify-icon icon="tabler:search" class="fs-4 me-3"></iconify-icon>
         </form>
@@ -36,118 +33,109 @@
   </div>
 </div>
 
+<!-- Navbar -->
 <nav class="main-menu d-flex navbar fixed-top navbar-expand-lg py-lg-4">
   <div class="container">
+
+    <!-- Mobile Logo -->
     <div class="main-logo d-lg-none">
-      <a href="/">
-        <img src="assets/images/logo.png" alt="logo" class="img-fluid">
+      <a routerLink="/">
+        <img *ngIf="settings().logo; else defaultLogoMobile"
+             [src]="'http://127.0.0.1:8000/storage/' + settings().logo"
+             alt="logo" class="img-fluid">
+        <ng-template #defaultLogoMobile>
+          <img src="assets/images/logo.png" alt="logo" class="img-fluid">
+        </ng-template>
       </a>
     </div>
 
-    <button class="navbar-toggler border-0 shadow-none " type="button" data-bs-toggle="offcanvas"
+    <!-- Toggler -->
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas"
       data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- Offcanvas Navbar -->
     <div class="offcanvas offcanvas-end bg-black" tabindex="-1" id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel">
-
+         aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header justify-content-center">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
 
       <div class="offcanvas-body justify-content-between align-items-center">
 
+        <!-- Desktop Logo -->
         <div class="main-logo">
-          <a href="/">
-            <img src="assets/images/logo.png" alt="logo" class="img-fluid"> </a>
+          <a routerLink="/">
+            <img *ngIf="settings().logo; else defaultLogoDesktop"
+                 [src]="'http://127.0.0.1:8000/storage/' + settings().logo"
+                 alt="logo" class="img-fluid">
+            <ng-template #defaultLogoDesktop>
+              <img src="assets/images/logo.png" alt="logo" class="img-fluid">
+            </ng-template>
+          </a>
         </div>
 
-<ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
-
-  <!-- Home -->
+        <!-- Navbar Links -->
+        <ul class="navbar-nav menu-list list-unstyled d-flex gap-md-3 ps-lg-5 mb-0">
   <li class="nav-link mx-2 active">
     <a routerLink="/" class="nav-link mx-2 active">Home</a>
   </li>
 
-  <!-- Only Parent Categories -->
- <ng-container *ngFor="let cat of categories()">
+  <ng-container *ngFor="let cat of categories()">
+    <ng-container *ngIf="!cat.parent_id">
+      <!-- Category without children -->
+      <li *ngIf="!cat.children || cat.children.length === 0" class="nav-link mx-2">
+        <a [routerLink]="['/shop', cat.slug]" class="nav-link mx-2">{{ cat.name }}</a>
+      </li>
 
-  <!-- Skip child categories -->
-  <ng-container *ngIf="!cat.parent_id">
-
-    <!-- Category WITHOUT children -->
-    <li *ngIf="!cat.children || cat.children.length === 0" class="nav-link mx-2">
-      <a class="nav-link mx-2" [routerLink]="['/shop', cat.slug]">
-        {{ cat.name }}
-      </a>
-    </li>
-
-    <!-- Category WITH children -->
-    <li *ngIf="cat.children && cat.children.length > 0" class="nav-link dropdown mx-2">
-      <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">
-        {{ cat.name }}
-      </a>
-      <ul class="dropdown-menu">
-        <li *ngFor="let child of cat.children">
-          <a class="dropdown-item" [routerLink]="['/shop', child.slug]">
-            {{ child.name }}
-          </a>
-        </li>
-      </ul>
-    </li>
-
+      <!-- Category with children -->
+      <li *ngIf="cat.children && cat.children.length > 0" class="nav-link dropdown mx-2">
+        <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">
+          {{ cat.name }}
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngFor="let child of cat.children">
+            <a [routerLink]="['/shop', child.slug]" class="dropdown-item">{{ child.name }}</a>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
   </ng-container>
-
-</ng-container>
 </ul>
+        <!-- Desktop icons placeholder -->
         <div class="d-none d-lg-flex justify-content-end">
           <ul class="d-flex justify-content-end list-unstyled m-0">
-            <li class="lh-1">
-            
-            </li>
-
-
-
-
-            <li class="lh-1">
-             
-            </li>
-
+            <li class="lh-1"></li>
+            <li class="lh-1"></li>
           </ul>
-
         </div>
 
       </div>
     </div>
   </div>
 
+  <!-- Mobile action icons -->
   <div class="container-fluid px-md-5 d-lg-none">
     <ul class="d-flex justify-content-end list-unstyled m-0 mt-4">
       <li class="lh-1">
-        <a href="account.html" class="me-4">
+        <a routerLink="/account" class="me-4">
           <iconify-icon icon="healthicons:person" class="fs-4 text-light"></iconify-icon>
         </a>
       </li>
       <li class="lh-1">
-        <a href="wishlist.html" class="me-4">
+        <a routerLink="/wishlist" class="me-4">
           <iconify-icon icon="mdi:heart" class="fs-4 text-light"></iconify-icon>
         </a>
       </li>
-
       <li class="lh-1">
-        <a href="#" class="me-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-          aria-controls="offcanvasCart">
+        <a href="#" class="me-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
           <iconify-icon icon="mdi:cart" class="fs-4 text-light position-relative"></iconify-icon>
-          <span class="position-absolute translate-middle badge rounded-circle text-black bg-light p-1">
-            03
-          </span>
+          <span class="position-absolute translate-middle badge rounded-circle text-black bg-light p-1">03</span>
         </a>
       </li>
-
       <li class="lh-1">
-        <a href="#" class="me-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
-          aria-controls="offcanvasSearch">
+        <a href="#" class="me-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
           <iconify-icon icon="tabler:search" class="fs-4 text-light"></iconify-icon>
         </a>
       </li>
