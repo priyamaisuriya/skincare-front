@@ -7,17 +7,22 @@ import { filter } from 'rxjs';
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']  // corrected
+  styleUrls: ['./app.css']
 })
 export class App {
   protected readonly title = signal('skincare-front');
 
   constructor() {
     const router = inject(Router);
+
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      window.scrollTo(0, 0);
+
+      if (typeof window !== 'undefined') {
+        window.scrollTo(0, 0);
+      }
+
     });
   }
 }
