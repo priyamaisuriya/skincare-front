@@ -30,7 +30,7 @@ export const routes: Routes = [
 
       {path : 'bestseller' , component : BestSeller },
 
-      {path : 'NewArrivals' , component : NewArrivals }
+      {path : 'new-arrivals' , component : NewArrivals }
 
     ]
   },
