@@ -7,6 +7,7 @@ import { About } from './component/about/about';
 import { ContactComponent } from './component/contact/contact';
 import { BestSeller } from './component/best-seller/best-seller';
 import { NewArrivals } from './component/new-arrivals/new-arrivals';
+import { FaqComponent } from './component/faq/faq';
 
 
 export const routes: Routes = [
@@ -30,7 +31,9 @@ export const routes: Routes = [
 
       {path : 'bestseller' , component : BestSeller },
 
-      {path : 'new-arrivals' , component : NewArrivals }
+      {path : 'new-arrivals' , component : NewArrivals },
+
+      {path : 'faq', component:FaqComponent}
 
     ]
   },
