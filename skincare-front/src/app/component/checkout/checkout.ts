@@ -21,7 +21,7 @@ export class CheckoutComponent implements OnInit {
   cartItems = signal<any[]>([]);
   totalAmount = signal<number>(0);
   states = signal<any[]>([]);
-  
+
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
 
@@ -35,7 +35,7 @@ export class CheckoutComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     const user = this.authService.currentUser();
-    
+
     this.checkoutForm = this.fb.group({
       firstname: [user?.first_name || '', Validators.required],
       lastname: [user?.last_name || '', Validators.required],
