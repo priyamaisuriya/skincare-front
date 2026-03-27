@@ -16,7 +16,7 @@ export class ContactComponent {
   contactData = {
     name: '',
     email: '',
-    phone: '',
+    phone_number: '',
     subject: '',
     message: ''
   };
@@ -37,7 +37,7 @@ export class ContactComponent {
         this.successMessage = "Message Sent Successfully!";
         this.errorMessage = '';
         form.reset();
-        this.contactData = { name: '', email: '', phone: '', subject: '', message: '' };
+        this.contactData = { name: '', email: '', phone_number: '', subject: '', message: '' };
       },
       error: (err: any) => {
         this.isLoading = false;

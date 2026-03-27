@@ -17,7 +17,7 @@ export class FaqComponent implements OnInit {
   contactData = {
     name: '',
     email: '',
-    phone: '',
+    phone_number: '',
     subject: '',
     message: ''
   };
@@ -50,7 +50,7 @@ export class FaqComponent implements OnInit {
         this.successMessage = "Message Sent Successfully!";
         this.errorMessage = '';
         form.reset();
-        this.contactData = { name: '', email: '', phone: '', subject: '', message: '' };
+        this.contactData = { name: '', email: '', phone_number: '', subject: '', message: '' };
       },
       error: (err: any) => {
         this.isLoading = false;
