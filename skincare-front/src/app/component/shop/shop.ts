@@ -1,13 +1,16 @@
-import { Component, OnInit, Inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../service/category';
 import { ProductService } from '../../service/product';
+import { CartService } from '../../service/cart';
+import { AuthService } from '../../service/auth';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './shop.html',
   styleUrls: ['./shop.css']
 })
@@ -25,6 +28,8 @@ export class ShopComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
+    private cartService: CartService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -151,6 +156,36 @@ export class ShopComponent implements OnInit {
 
     this.products.set(sorted);
 
+  }
+
+  addToCart(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId).subscribe({
+      next: (res) => {
+        alert('Product added to cart!');
+      },
+      error: (err) => {
+        console.error('Add to cart failed', err);
+      }
+    });
+  }
+
+  addToWishlist(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId, true).subscribe({
+      next: (res) => {
+        alert('Product added to wishlist!');
+      },
+      error: (err) => {
+        console.error('Add to wishlist failed', err);
+      }
+    });
   }
 
 }

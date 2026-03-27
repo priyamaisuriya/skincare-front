@@ -1,15 +1,17 @@
 import { Component, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import Swiper from 'swiper/bundle';
+import { CartService } from '../../service/cart';
+import { AuthService } from '../../service/auth';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.html',
   styleUrls: ['./index.css'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class IndexComponent implements OnInit, AfterViewInit {
@@ -19,9 +21,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
   newProducts = signal<any[]>([]);
   bestSellers = signal<any[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    console.log('IndexComponent isLoggedIn:', this.authService.isLoggedIn());
     this.loadSlidersAndData();
   }
 
@@ -79,6 +87,36 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
       });
 
+  }
+
+  addToCart(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId).subscribe({
+      next: (res) => {
+        this.router.navigate(['/cart']);
+      },
+      error: (err) => {
+        console.error('Add to cart failed', err);
+      }
+    });
+  }
+
+  addToWishlist(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId, true).subscribe({
+      next: (res) => {
+        alert('Product added to wishlist!');
+      },
+      error: (err) => {
+        console.error('Add to wishlist failed', err);
+      }
+    });
   }
 
 }

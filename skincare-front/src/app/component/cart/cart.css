@@ -1,0 +1,33 @@
+#banner {
+  background-size: cover;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: #fff;
+}
+
+#cart table thead th {
+  border-bottom: 2px solid #333;
+}
+
+#cart .cart-info img {
+  border: 1px solid #eee;
+}
+
+#cart .product-qty button {
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+#cart .product-qty button:hover {
+  background-color: #e9ecef;
+}
+
+#cart .cart-totals {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+
+.price-amount {
+  color: #d8b27d; /* Assuming a gold color similar to premium skin care brands */
+  font-weight: 600;
+}

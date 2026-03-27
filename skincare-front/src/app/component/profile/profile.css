@@ -1,0 +1,52 @@
+#banner {
+  padding: 100px 0;
+  background-color: #000;
+  border-bottom: 5px solid #000;
+}
+
+.padding-medium-2 h2 {
+  color: #fff;
+  font-weight: 700;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-control, .form-select {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #000;
+  box-shadow: none;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.btn-primary {
+  background-color: #000;
+  border-color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
+.btn-outline-dark {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.alert {
+  font-size: 14px;
+  border-radius: 4px;
+}

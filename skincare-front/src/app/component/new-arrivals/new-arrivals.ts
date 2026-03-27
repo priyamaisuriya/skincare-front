@@ -1,12 +1,15 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CartService } from '../../service/cart';
+import { AuthService } from '../../service/auth';
 
 @Component({
   selector: 'app-new-arrivals',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './new-arrivals.html',
   styleUrls: ['./new-arrivals.css']
 })
@@ -19,7 +22,11 @@ export class NewArrivals implements OnInit {
 
   apiUrl = 'http://127.0.0.1:8000/api/front';
 
-  constructor(private http:HttpClient){}
+  constructor(
+    private http:HttpClient,
+    private cartService: CartService,
+    private authService: AuthService
+  ){}
 
   ngOnInit(): void {
 
@@ -144,6 +151,36 @@ export class NewArrivals implements OnInit {
 
     this.products.set(filtered);
 
+  }
+
+  addToCart(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId).subscribe({
+      next: (res) => {
+        alert('Product added to cart!');
+      },
+      error: (err) => {
+        console.error('Add to cart failed', err);
+      }
+    });
+  }
+
+  addToWishlist(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      alert('Please login first!');
+      return;
+    }
+    this.cartService.addToCart(productId, true).subscribe({
+      next: (res) => {
+        alert('Product added to wishlist!');
+      },
+      error: (err) => {
+        console.error('Add to wishlist failed', err);
+      }
+    });
   }
 
 }

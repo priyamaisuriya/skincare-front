@@ -2,12 +2,8 @@
 <section id="hero">
   <div class="swiper slideshow">
     <div class="swiper-wrapper">
-      <div 
-        class="swiper-slide" 
-        *ngFor="let slide of sliders()" 
-        [style.backgroundImage]="'url(' + slide.image_url + ')'"
-        style="background-repeat: no-repeat; background-position: center; height:950px;"
-      >
+      <div class="swiper-slide" *ngFor="let slide of sliders()" [style.backgroundImage]="'url(' + slide.image_url + ')'"
+        style="background-repeat: no-repeat; background-position: center; height:950px;">
         <div class="container padding-large">
           <div class="row justify-content-end">
             <div class="col-lg-6 text-white">
@@ -42,21 +38,15 @@
 <section id="category" class="my-5">
   <div class="container-fluid px-3 px-md-5">
     <div class="row">
-      <div 
-        class="col-md-4 position-relative mb-4" 
-        *ngFor="let category of categories(); let i = index"
-        [attr.data-aos-delay]="300 + i * 300"
-      >
+      <div class="col-md-4 position-relative mb-4" *ngFor="let category of categories(); let i = index"
+        [attr.data-aos-delay]="300 + i * 300">
         <div class="z-1 position-absolute bottom-0 start-0 m-3 m-lg-5 ps-4 text-white">
           <h3 class="text-light text-uppercase">{{ category.name }}</h3>
         </div>
         <div class="image-holder zoom-effect">
           <a [routerLink]="['/categories', category.slug]">
-            <img 
-              [src]="'http://127.0.0.1:8000/storage/' + category.image_url" 
-              [alt]="category.name" 
-              class="post-image img-fluid"
-            >
+            <img [src]="'http://127.0.0.1:8000/storage/' + category.image_url" [alt]="category.name"
+              class="post-image img-fluid">
           </a>
         </div>
       </div>
@@ -73,16 +63,23 @@
       <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of newProducts()">
         <div class="product-item position-relative border rounded p-2">
           <div class="image-holder">
-            <img 
-              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
-              [alt]="product.name" 
-              class="product-image img-fluid"
-            >
+            <img
+              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'"
+              [alt]="product.name" class="product-image img-fluid">
           </div>
-          <div class="cart-concern mt-1">
-            <a [routerLink]="['/product', product.slug]">
-              <i class="icon icon-screen-full"></i>
-            </a>
+          <div class="cart-concern">
+            <div class="cart-button d-flex justify-content-between align-items-center">
+              <a href="javascript:void(0)" class="prod-doodle-btn" (click)="addToCart(product.id)">
+                Add To Cart
+                <i class="icon icon-arrow-io pe-1"></i>
+              </a>
+              <a [routerLink]="['/product', product.slug]" class="view-btn mt-1">
+                <i class="icon icon-screen-full"></i>
+              </a>
+              <a href="javascript:void(0)" class="add-to-wishlist-btn mt-1" (click)="addToWishlist(product.id)">
+                <i class="icon icon-heart"></i>
+              </a>
+            </div>
           </div>
           <div class="product-detail d-flex justify-content-between align-items-center mt-2">
             <a [routerLink]="['/single-product', product.slug]">
@@ -108,16 +105,23 @@
       <div class="col-md-6 col-lg-3 my-4" *ngFor="let product of bestSellers()">
         <div class="product-item position-relative border rounded p-2">
           <div class="image-holder">
-            <img 
-              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'" 
-              [alt]="product.name" 
-              class="product-image img-fluid"
-            >
+            <img
+              [src]="product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + product.product_images[0].image_url : 'assets/images/no-image.png'"
+              [alt]="product.name" class="product-image img-fluid">
           </div>
-          <div class="cart-concern mt-1">
-            <a [routerLink]="['/product', product.slug]">
-              <i class="icon icon-screen-full"></i>
-            </a>
+          <div class="cart-concern">
+            <div class="cart-button d-flex justify-content-between align-items-center">
+              <a href="javascript:void(0)" class="prod-doodle-btn" (click)="addToCart(product.id)">
+                Add To Cart
+                <i class="icon icon-arrow-io pe-1"></i>
+              </a>
+              <a [routerLink]="['/product', product.slug]" class="view-btn mt-1">
+                <i class="icon icon-screen-full"></i>
+              </a>
+              <a href="javascript:void(0)" class="add-to-wishlist-btn mt-1" (click)="addToWishlist(product.id)">
+                <i class="icon icon-heart"></i>
+              </a>
+            </div>
           </div>
           <div class="product-detail d-flex justify-content-between align-items-center mt-2">
             <a [routerLink]="['/single-product', product.slug]">
@@ -137,95 +141,94 @@
 
 <section class="testimonials bg-primary padding-medium"
   style="background-image: url('assets/images/background-img1.jpg'); background-repeat: no-repeat; background-position: center;">
-    <div class="swiper testimonial-swiper overflow-hidden" >
-      <div class="swiper-wrapper d-flex">
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“This skincare serum completely transformed my complexion. My skin has never felt more hydrated and
-                radiant!”</p>
-              <div class="review-title mt-3 text-uppercase text-center">- Glowing Results</div>
-            </blockquote>
-          </div>
+  <div class="swiper testimonial-swiper overflow-hidden">
+    <div class="swiper-wrapper d-flex">
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center">
+          <blockquote>
+            <p>“This skincare serum completely transformed my complexion. My skin has never felt more hydrated and
+              radiant!”</p>
+            <div class="review-title mt-3 text-uppercase text-center">- Glowing Results</div>
+          </blockquote>
         </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“The foundation provides perfect coverage while feeling lightweight. It's become my daily essential.”
-              </p>
-              <div class="review-title mt-3 text-uppercase text-center">- Sophia</div>
-            </blockquote>
-          </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center">
+          <blockquote>
+            <p>“The foundation provides perfect coverage while feeling lightweight. It's become my daily essential.”
+            </p>
+            <div class="review-title mt-3 text-uppercase text-center">- Sophia</div>
+          </blockquote>
         </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“The fragrance lasts all day and I constantly receive compliments. Absolutely worth every penny!”</p>
-              <div class="review-title mt-3 text-uppercase text-center">- Signature Scent</div>
-            </blockquote>
-          </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center">
+          <blockquote>
+            <p>“The fragrance lasts all day and I constantly receive compliments. Absolutely worth every penny!”</p>
+            <div class="review-title mt-3 text-uppercase text-center">- Signature Scent</div>
+          </blockquote>
         </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“These products are cruelty-free and actually deliver visible results. My new beauty ritual!”</p>
-              <div class="review-title mt-3 text-uppercase text-center">- Emma</div>
-            </blockquote>
-          </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center">
+          <blockquote>
+            <p>“These products are cruelty-free and actually deliver visible results. My new beauty ritual!”</p>
+            <div class="review-title mt-3 text-uppercase text-center">- Emma</div>
+          </blockquote>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="service" class="padding-medium">
-    <div class="container" >
-      <div class="row">
-        <div class="col-md-3 my-3">
-          <div class="card">
-            <div>
-              <iconify-icon class="service-icon text-primary display-4" icon="ci:shopping-cart-02"></iconify-icon>
-            </div>
-            <h4 class=" text-uppercase py-3 m-0">Free Delivery</h4>
-              <div class="card-text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-              </div>
+<section id="service" class="padding-medium">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 my-3">
+        <div class="card">
+          <div>
+            <iconify-icon class="service-icon text-primary display-4" icon="ci:shopping-cart-02"></iconify-icon>
+          </div>
+          <h4 class=" text-uppercase py-3 m-0">Free Delivery</h4>
+          <div class="card-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
           </div>
         </div>
-        <div class="col-md-3 my-3">
-          <div class="card">
-            <div>
-              <iconify-icon class="service-icon text-primary display-4" icon="tdesign:secured"></iconify-icon>
-            </div>
-            <h4 class=" text-uppercase py-3 m-0">100% secure payment</h4>
-              <div class="card-text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-              </div>
-          </div>
-        </div>
-        <div class="col-md-3 my-3">
-          <div class="card">
-            <div>
-              <iconify-icon class="service-icon text-primary display-4" icon="la:award"></iconify-icon>
-            </div>
-            <h4 class=" text-uppercase py-3 m-0">Quality guarantee</h4>
-              <div class="card-text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-              </div>
-          </div>
-        </div>
-        <div class="col-md-3 my-3">
-          <div class="card">
-            <div>
-              <iconify-icon class="service-icon text-primary display-4" icon="solar:dollar-outline"></iconify-icon>
-            </div>
-            <h4 class=" text-uppercase py-3 m-0">Daily Offer</h4>
-              <div class="card-text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-              </div>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
+      <div class="col-md-3 my-3">
+        <div class="card">
+          <div>
+            <iconify-icon class="service-icon text-primary display-4" icon="tdesign:secured"></iconify-icon>
+          </div>
+          <h4 class=" text-uppercase py-3 m-0">100% secure payment</h4>
+          <div class="card-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 my-3">
+        <div class="card">
+          <div>
+            <iconify-icon class="service-icon text-primary display-4" icon="la:award"></iconify-icon>
+          </div>
+          <h4 class=" text-uppercase py-3 m-0">Quality guarantee</h4>
+          <div class="card-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 my-3">
+        <div class="card">
+          <div>
+            <iconify-icon class="service-icon text-primary display-4" icon="solar:dollar-outline"></iconify-icon>
+          </div>
+          <h4 class=" text-uppercase py-3 m-0">Daily Offer</h4>
+          <div class="card-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+          </div>
+        </div>
+      </div>
 
+    </div>
+  </div>
+</section>

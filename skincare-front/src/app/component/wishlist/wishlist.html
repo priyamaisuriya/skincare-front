@@ -1,0 +1,62 @@
+<section id="banner"
+  style="background-image: url('assets/images/banner-img2.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+  <div class="container padding-medium-2">
+    <div class="hero-content text-center text-light">
+      <h2 class="display-1 text-uppercase text-light mt-5 mb-0">My Wishlist</h2>
+      <nav class="breadcrumb d-flex justify-content-center">
+        <a class="breadcrumb-item nav-link" routerLink="/">Home</a>
+        <span class="breadcrumb-item active text-light">Wishlist</span>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<section class="wishlist-section py-5">
+  <div class="container py-5">
+    <div *ngIf="wishlistItems().length > 0; else emptyWishlist" class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col" class="text-center">Price</th>
+            <th scope="col" class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of wishlistItems()">
+            <td>
+              <div class="d-flex align-items-center">
+                <img *ngIf="item.product?.product_images?.[0]?.image_url"
+                  [src]="'http://127.0.0.1:8000/storage/' + item.product.product_images[0].image_url"
+                  alt="Product Image" style="width: 80px;" class="img-fluid rounded me-3">
+                <div>
+                  <h6 class="mb-0 text-primary">{{ item.product?.name }}</h6>
+                </div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span class="fs-5">₹{{ item.product?.amount }}</span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-primary btn-sm me-2" (click)="addToCart(item.product_id)">
+                Add to Cart
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="removeFromWishlist(item.id)">
+                <iconify-icon icon="mdi:trash-can"></iconify-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #emptyWishlist>
+      <div class="text-center py-5">
+        <iconify-icon icon="mdi:heart-outline" class="display-1 text-secondary mb-3"></iconify-icon>
+        <h3>Your wish list is empty</h3>
+        <p class="mb-4 text-secondary">Browse our store and add some products to your favorites!</p>
+        <a routerLink="/shop" class="btn btn-primary px-5">Go to Shop</a>
+      </div>
+    </ng-template>
+  </div>
+</section>

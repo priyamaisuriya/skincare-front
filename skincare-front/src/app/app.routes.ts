@@ -8,6 +8,13 @@ import { ContactComponent } from './component/contact/contact';
 import { BestSeller } from './component/best-seller/best-seller';
 import { NewArrivals } from './component/new-arrivals/new-arrivals';
 import { FaqComponent } from './component/faq/faq';
+import { WishlistComponent } from './component/wishlist/wishlist';
+import { AccountComponent } from './component/account/account';
+import { CheckoutComponent } from './component/checkout/checkout';
+import { ThankYouComponent } from './component/thank-you/thank-you';
+import { MyOrdersComponent } from './component/my-orders/my-orders';
+import { ProfileComponent } from './component/profile/profile';
+import { CartComponent } from './component/cart/cart';
 
 
 export const routes: Routes = [
@@ -18,6 +25,7 @@ export const routes: Routes = [
 
       { path: '', component: Index },
 
+      { path: 'cart', component: CartComponent },
 
       { path: 'shop/:slug', component: ShopComponent },
 
@@ -33,7 +41,19 @@ export const routes: Routes = [
 
       {path : 'new-arrivals' , component : NewArrivals },
 
-      {path : 'faq', component:FaqComponent}
+      {path : 'faq', component:FaqComponent},
+
+      {path : 'wishlist', component:WishlistComponent},
+
+      {path : 'account', component:AccountComponent},
+
+      {path : 'checkout', component:CheckoutComponent},
+
+      {path : 'thank-you', component:ThankYouComponent},
+
+      {path : 'my-orders', component:MyOrdersComponent},
+
+      {path : 'profile', component:ProfileComponent}
 
     ]
   },

@@ -1,0 +1,105 @@
+<section id="banner"
+         style="background-image: url('assets/images/banner-img2.jpg');
+          background-repeat: no-repeat;
+          background-position: center;
+          padding: 100px 0;">
+  <div class="container padding-medium-2">
+      <div class="hero-content text-center">
+          <h2 class="display-1 text-uppercase text-light mt-5 mb-0">Cart</h2>
+          <nav class="breadcrumb d-flex justify-content-center">
+              <a class="breadcrumb-item nav-link" routerLink="/">Home</a>
+              <a class="breadcrumb-item nav-link" href="javascript:void(0)">Pages</a>
+              <span class="breadcrumb-item active text-light" aria-current="page">Cart</span>
+          </nav>
+      </div>
+  </div>
+</section>
+
+<section id="cart" class="py-5">
+  <div class="container padding-medium">
+      <div class="row g-md-5">
+          <div class="col-md-8 pe-md-5">
+              <table class="table align-middle">
+                  <thead>
+                      <tr>
+                          <th scope="col" class="card-title text-uppercase pb-4">Product</th>
+                          <th scope="col" class="card-title text-uppercase pb-4">Quantity</th>
+                          <th scope="col" class="card-title text-uppercase pb-4">Subtotal</th>
+                          <th scope="col" class="pb-4"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of cartItems()">
+                          <td scope="row" class="py-4">
+                              <div class="cart-info d-flex flex-wrap align-items-center">
+                                  <div class="col-lg-3">
+                                      <div class="card-image">
+                                          <img [src]="item.product?.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + item.product.product_images[0].image_url : 'assets/images/no-image.png'" 
+                                               class="img-fluid rounded" [alt]="item.product?.name">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-9">
+                                      <div class="card-detail ps-3">
+                                          <h5 class="card-title">
+                                              <a [routerLink]="['/product', item.product?.slug]" class="text-decoration-none text-dark">{{ item.product?.name }}</a>
+                                          </h5>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="py-4">
+                              <div class="input-group product-qty align-items-center" style="max-width: 120px;">
+                                  <button type="button" class="btn btn-light p-1 border" (click)="decreaseQty(item.id, item.quantity)">
+                                      <iconify-icon icon="mdi:minus" class="fs-5"></iconify-icon>
+                                  </button>
+                                  <input type="text" [value]="item.quantity" readonly class="form-control text-center p-2 mx-1 border-0 bg-transparent">
+                                  <button type="button" class="btn btn-light p-1 border" (click)="increaseQty(item.id, item.quantity)">
+                                      <iconify-icon icon="mdi:plus" class="fs-5"></iconify-icon>
+                                  </button>
+                              </div>
+                          </td>
+                          <td class="py-4">
+                              <span class="secondary-font fw-medium">₹{{ (item.quantity * item.product?.amount) | number:'1.2-2' }}</span>
+                          </td>
+                          <td class="py-4 text-end">
+                              <a href="javascript:void(0)" (click)="removeCartItem(item.id)" 
+                                 class="btn btn-outline-danger p-2" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;">
+                                  <iconify-icon icon="mdi:trash-can-outline" class="fs-5"></iconify-icon>
+                              </a>
+                          </td>
+                      </tr>
+                      <tr *ngIf="cartItems().length === 0">
+                          <td colspan="4" class="text-center py-5">
+                              <p class="fs-4 text-secondary">Your cart is empty.</p>
+                              <a routerLink="/shop" class="btn btn-outline-primary mt-3">CONTINUE SHOPPING</a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="col-md-4">
+              <div class="cart-totals mt-5 mt-lg-0 p-4 border rounded-3 bg-light">
+                  <h2 class="pb-4 h4 text-uppercase">Cart Total</h2>
+                  <div class="total-price pb-4">
+                      <table class="table text-uppercase m-0">
+                          <tbody>
+                              <tr class="subtotal py-3 border-top border-primary">
+                                  <th class="py-3">Subtotal</th>
+                                  <td class="py-3 text-end"><span class="price-amount">₹{{ totalAmount() | number:'1.2-2' }}</span></td>
+                              </tr>
+                              <tr class="order-total py-3 border-top border-bottom border-primary">
+                                  <th class="py-3">Total</th>
+                                  <td class="py-3 text-end"><strong class="price-amount text-dark fs-5">₹{{ totalAmount() | number:'1.2-2' }}</strong></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="button-wrap d-grid gap-2">
+                      <button class="btn btn-primary p-3 w-100 fs-6 fw-bold" (click)="proceedToCheckout()">PROCEED TO CHECKOUT</button>
+                      <a routerLink="/shop" class="btn btn-outline-primary p-3 w-100 fs-6">CONTINUE SHOPPING</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

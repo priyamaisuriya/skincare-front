@@ -1,0 +1,75 @@
+#banner {
+  height: 450px;
+  display: flex;
+  align-items: center;
+}
+
+#banner .hero-content h2 {
+    font-size: 4.5rem;
+    letter-spacing: 2px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255,255,255,0.5);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.card {
+    border: none;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.table thead th {
+    font-family: var(--heading-font);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #888;
+}
+
+.table tbody td {
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.font-monospace {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace !important;
+}
+
+#contact-info .detail h3 {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+#contact-info .detail h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--accent-color);
+}
+
+#register {
+    background-size: cover;
+    color: #000;
+}
+
+#register h2 span em {
+    color: var(--accent-color);
+}
+
+@media screen and (max-width: 768px) {
+    #banner {
+        height: 350px;
+    }
+    #banner .hero-content h2 {
+        font-size: 3rem;
+    }
+}

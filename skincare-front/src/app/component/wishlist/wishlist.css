@@ -1,0 +1,15 @@
+
+.wishlist-section .table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+.wishlist-section .table tr {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}
+
+.wishlist-section .table td {
+  padding: 20px;
+  border: none;
+}

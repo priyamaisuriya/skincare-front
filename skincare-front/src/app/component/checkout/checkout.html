@@ -1,0 +1,128 @@
+<section id="banner"
+  style="background-image:url('assets/images/banner-img2.jpg'); background-repeat: no-repeat; background-position: center;">
+  <div class="container padding-medium-2">
+    <div class="hero-content text-center">
+      <h2 class="display-1 text-uppercase text-light mt-5 mb-0">Checkout</h2>
+    </div>
+  </div>
+</section>
+
+<section id="checkout">
+  <div class="container padding-medium">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onOrder()" class="form-group pb-5">
+
+      <div *ngIf="errorMessage()" class="alert alert-danger mb-4">{{ errorMessage() }}</div>
+      <div *ngIf="successMessage()" class="alert alert-success mb-4">{{ successMessage() }}</div>
+
+      <div class="row">
+        <!-- Billing / Shipping Details -->
+        <div class="col-lg-6">
+          <h2 class="text-dark pb-3">Billing Details</h2>
+          <div class="billing-details">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label for="fname">First Name*</label>
+                <input type="text" formControlName="firstname" class="form-control mt-2 ps-3">
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="lname">Last Name*</label>
+                <input type="text" formControlName="lastname" class="form-control mt-2 ps-3">
+              </div>
+            </div>
+
+            <label for="address">Street Address*</label>
+            <input type="text" formControlName="address" placeholder="House number and street name"
+              class="form-control mt-2 mb-4 ps-3">
+
+            <label for="city">Town / City *</label>
+            <input type="text" formControlName="city" class="form-control mt-2 mb-4 ps-3">
+
+            <label for="state">State *</label>
+            <select formControlName="state" class="form-select form-control mt-2 mb-4">
+              <option value="" disabled>Select State</option>
+              <option *ngFor="let s of states()" [value]="s.id">{{ s.name }}</option>
+            </select>
+
+            <label for="zip">Zip Code *</label>
+            <input type="text" formControlName="zip" class="form-control mt-2 mb-4 ps-3">
+
+            <label for="phone">Phone *</label>
+            <input type="text" formControlName="phone" class="form-control mt-2 mb-4 ps-3">
+
+            <label for="email">Email address *</label>
+            <input type="email" formControlName="email" class="form-control mt-2 mb-4 ps-3">
+          </div>
+        </div>
+
+        <!-- Order Summary & Payment -->
+        <div class="col-lg-6">
+          <div class="your-order bg-light p-4 rounded-3 border">
+            <h2 class="display-7 text-dark pb-3">Order Summary</h2>
+            <div class="total-price">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let item of cartItems()" class="cart-item">
+                    <th class="d-flex align-items-center text-capitalize text-start fw-normal py-3 border-0">
+                      <div class="position-relative me-3">
+                        <img
+                          [src]="item.product.product_images?.[0]?.image_url ? 'http://127.0.0.1:8000/storage/' + item.product.product_images[0].image_url : 'assets/images/no-image.png'"
+                          class="img-fluid rounded border shadow-sm"
+                          style="width: 50px; height: 50px; object-fit: cover;" alt="{{ item.product.name }}">
+                        <span
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark text-white"
+                          style="font-size: 10px; padding: 4px 6px;">
+                          {{ item.quantity }}
+                        </span>
+                      </div>
+                      <span class="fw-bold fs-6">{{ item.product.name }}</span>
+                    </th>
+                    <td class="align-middle border-0 text-end">
+                      <span class="fw-bold text-dark">₹{{ (item.quantity * item.product.amount).toFixed(2) }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <hr>
+
+              <table class="table mb-4">
+                <tbody>
+                  <tr class="subtotal text-uppercase">
+                    <th class="border-0">Subtotal</th>
+                    <td class="border-0 text-end">₹{{ totalAmount().toFixed(2) }}</td>
+                  </tr>
+                  <tr class="order-total text-uppercase border-top">
+                    <th class="border-0 py-3">Total</th>
+                    <td class="border-0 py-3 text-end fw-bold fs-4">₹{{ totalAmount().toFixed(2) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="payment-methods mt-4 mb-4">
+                <h4 class="text-dark mb-3">Payment Method</h4>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" value="cod" formControlName="payment_method"
+                    id="payment_cod">
+                  <label class="form-check-label" for="payment_cod">
+                    <strong>Cash on Delivery</strong>
+                    <small class="d-block text-muted">Pay with cash upon delivery.</small>
+                  </label>
+                </div>
+                <!-- <div class="form-check mb-4">
+                  <input class="form-check-input" type="radio" value="online_payment" formControlName="payment_method" id="payment_online">
+                  <label class="form-check-label" for="payment_online">
+                    <strong>Online Payment</strong>
+                    <small class="d-block text-muted">Pay with Razorpay / Gateway.</small>
+                  </label>
+                </div> -->
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg rounded-1 w-100 py-3 fs-5"
+                [disabled]="checkoutForm.invalid">Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
