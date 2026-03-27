@@ -18,7 +18,6 @@ export const routes: Routes = [
 
       { path: '', component: Index },
 
-
       { path: 'shop/:slug', component: ShopComponent },
 
       { path: 'product/:slug', component: SingleProductComponent },
@@ -33,7 +32,8 @@ export const routes: Routes = [
 
       {path : 'new-arrivals' , component : NewArrivals },
 
-      {path : 'faq', component:FaqComponent}
+      {path : 'faq', component:FaqComponent},
+
 
     ]
   },
