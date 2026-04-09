@@ -1,0 +1,28 @@
+.padding-medium-2 {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.hero-content h2 {
+    letter-spacing: 2px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.breadcrumb-item.active {
+    color: #fff;
+}
+
+.table-light {
+    background-color: #f8f9fa;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}

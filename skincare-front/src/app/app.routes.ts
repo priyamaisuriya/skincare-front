@@ -15,6 +15,7 @@ import { ThankYouComponent } from './component/thank-you/thank-you';
 import { MyOrdersComponent } from './component/my-orders/my-orders';
 import { ProfileComponent } from './component/profile/profile';
 import { CartComponent } from './component/cart/cart';
+import { OrderDetailsComponent } from './component/order-details/order-details';
 
 
 export const routes: Routes = [
@@ -52,6 +53,8 @@ export const routes: Routes = [
       {path : 'thank-you', component:ThankYouComponent},
 
       {path : 'my-orders', component:MyOrdersComponent},
+
+      {path : 'order-details/:id', component:OrderDetailsComponent},
 
       {path : 'profile', component:ProfileComponent}
 

@@ -1,0 +1,101 @@
+<section id="banner"
+  style="background-image:url('assets/images/banner-img2.jpg'); background-repeat: no-repeat; background-position: center;">
+  <div class="container padding-medium-2">
+    <div class="hero-content text-center">
+      <h2 class="display-1 text-uppercase text-light mt-5 mb-0">Order Details</h2>
+      <nav class="breadcrumb d-flex justify-content-center">
+        <a class="breadcrumb-item nav-link" routerLink="/">Home</a>
+        <a class="breadcrumb-item nav-link" routerLink="/my-orders">My Orders</a>
+        <span class="breadcrumb-item active text-white" aria-current="page">Order #{{ orderId() }}</span>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5 mb-5 pb-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div *ngIf="isLoading()" class="text-center py-5">
+        <div class="spinner-border text-dark" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading() && order()">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+          <div class="card-header bg-dark text-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-uppercase">Order #{{ order().id }}</h5>
+            <span class="badge px-3 py-2 rounded-pill text-uppercase" [ngClass]="getStatusBadgeClass(order().status)">
+              {{ order().status }}
+            </span>
+          </div>
+          <div class="card-body p-4">
+            <div class="row mb-4">
+              <div class="col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Customer Information</h5>
+                <p class="mb-1"><strong>Name:</strong> {{ order().customer_name }}</p>
+                <p class="mb-1"><strong>Email:</strong> {{ order().customer_email }}</p>
+                <p class="mb-1"><strong>Phone:</strong> {{ order().customer_phone }}</p>
+                <p class="mb-1"><strong>Date:</strong> {{ order().created_at | date: 'dd MMM yyyy HH:mm' }}</p>
+              </div>
+              <div class="col-md-6">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Shipping Address</h5>
+                <p class="mb-1">{{ order().customer_address }}</p>
+                <p class="mb-1">{{ order().customer_city }}, {{ order().customer_state }}</p>
+                <p class="mb-1"><strong>Zip Code:</strong> {{ order().customer_postal_code }}</p>
+              </div>
+            </div>
+
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Order Items</h5>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th class="py-3">Product</th>
+                    <th class="py-3 text-center">Quantity</th>
+                    <th class="py-3 text-end">Price</th>
+                    <th class="py-3 text-end">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of order().order_items">
+                    <td class="py-3">
+                      <div class="d-flex align-items-center">
+                        <span class="fw-semibold">{{ item.product_name }}</span>
+                      </div>
+                    </td>
+                    <td class="py-3 text-center">{{ item.quantity }}</td>
+                    <td class="py-3 text-end">₹{{ (+item.price).toFixed(2) }}</td>
+                    <td class="py-3 text-end fw-bold">₹{{ (+item.amount).toFixed(2) }}</td>
+                  </tr>
+                </tbody>
+                <tfoot class="table-light">
+                  <tr>
+                    <th colspan="3" class="text-end py-3 border-0">Total Amount:</th>
+                    <th class="text-end py-3 border-0 fs-5 text-dark">₹{{ (+order().total_amount).toFixed(2) }}</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a routerLink="/my-orders" class="btn btn-dark px-4 py-2 rounded-1 text-uppercase fw-bold me-3">
+            Back to My Orders
+          </a>
+          <!-- <a routerLink="/shop" class="btn btn-outline-dark px-4 py-2 rounded-1 text-uppercase fw-bold">
+            Continue Shopping
+          </a> -->
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading() && !order()" class="text-center py-5 bg-light rounded border">
+        <iconify-icon icon="mdi:alert-circle-outline" class="display-1 text-muted mb-3"></iconify-icon>
+        <h4 class="text-secondary">Order not found.</h4>
+        <a routerLink="/my-orders" class="btn btn-primary mt-3 px-4 py-2 rounded-1 text-uppercase fw-bold">Back to My
+          Orders</a>
+      </div>
+    </div>
+  </div>
+</section>
