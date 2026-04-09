@@ -21,13 +21,9 @@ export class CartComponent implements OnInit {
     private cartService: CartService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/account']);
-      return;
-    }
     this.loadCart();
   }
 
@@ -48,6 +44,12 @@ export class CartComponent implements OnInit {
   }
 
   increaseQty(itemId: number, currentQty: number): void {
+    const items = this.cartItems();
+    const item = items.find(i => i.id === itemId);
+    if (item) {
+      item.quantity = currentQty + 1;
+      this.cartItems.set(items);
+    }
     this.cartService.updateQuantity(itemId, currentQty + 1).subscribe({
       next: () => this.loadCart()
     });
@@ -55,13 +57,19 @@ export class CartComponent implements OnInit {
 
   decreaseQty(itemId: number, currentQty: number): void {
     if (currentQty <= 1) return;
+    const items = this.cartItems();
+    const item = items.find(i => i.id === itemId);
+    if (item) {
+      item.quantity = currentQty - 1;
+      this.cartItems.set(items);
+    }
     this.cartService.updateQuantity(itemId, currentQty - 1).subscribe({
       next: () => this.loadCart()
     });
   }
 
   removeCartItem(id: number): void {
-    if(!confirm('Remove this item from cart?')) return;
+    if (!confirm('Remove this item from cart?')) return;
     this.cartService.removeItem(id).subscribe({
       next: () => this.loadCart()
     });

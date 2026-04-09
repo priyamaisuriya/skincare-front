@@ -143,7 +143,8 @@
         <div class="d-none d-lg-flex justify-content-end">
           <ul class="d-flex justify-content-end list-unstyled m-0 align-items-center">
             <li class="lh-1">
-              <div class="dropdown mx-3" *ngIf="authService.isLoggedIn()">
+              @if(authService.isLoggedIn()){
+              <div class="dropdown mx-3">
                 <a class="nav-link p-0" href="javascript:void(0)" data-bs-toggle="dropdown" aria-expanded="false">
                   <iconify-icon icon="healthicons:person" class="fs-4 text-light"></iconify-icon>
                 </a>
@@ -156,9 +157,11 @@
                   <li><a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Logout</a></li>
                 </ul>
               </div>
-              <a routerLink="/account" class="mx-3" *ngIf="!authService.isLoggedIn()">
+              }@else{
+              <a routerLink="/account" class="mx-3">
                 <iconify-icon icon="healthicons:person" class="fs-4 text-light"></iconify-icon>
               </a>
+              }
             </li>
             <li class="lh-1">
               <a routerLink="/wishlist" class="mx-3">
